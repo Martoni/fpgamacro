@@ -21,6 +21,15 @@ class ReverseClock() extends BlackBox with HasBlackBoxInline {
   |
   |
   |`timescale 1 ns / 1 ps
+  |`ifdef COCOTB_SIM
+  |module ReverseClock (CLKI, CLKOP, CLKOS);
+  |    input wire CLKI;
+  |    output wire CLKOP;
+  |    output wire CLKOS;
+  | assign CLKOP = !CLKI;
+  | assign CLKOS = !CLKI;
+  |endmodule
+  |`else
   |module ReverseClock (CLKI, CLKOP, CLKOS)/* synthesis NGD_DRC_MASK=1 */;
   |    input wire CLKI;
   |    output wire CLKOP;
@@ -113,5 +122,6 @@ class ReverseClock() extends BlackBox with HasBlackBoxInline {
   |    // exemplar end
   |
   |endmodule
+  |`endif
   """.stripMargin)
 }
