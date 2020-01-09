@@ -26,7 +26,7 @@ def javacOptionsVersion(scalaVersion: String): Seq[String] = {
 
 name := "fpgamacro"
 
-version := "0.1-SNAPSHOT"
+version := "0.1"
 
 organization := "org.armadeus"
 
