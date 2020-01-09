@@ -3,9 +3,14 @@ A Chisel3 package to describe verilog FPGA template and macro for hardened FPGA 
 
 ## Generic
 
-### TriStateBuffer
+### ResetGen
+
+Generating a reset pulse
+
+### TriStateBuffer
 
 Instanciation of 1 bit tri-state buffer.
+
 
 ## MachXO3
 
