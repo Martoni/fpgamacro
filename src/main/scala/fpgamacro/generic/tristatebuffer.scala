@@ -32,7 +32,7 @@ class TriStateBuffer extends BlackBox with HasBlackBoxInline {
 /* 16 bits tristate buffer */
 class TriStateBuffer16 extends BlackBox with HasBlackBoxInline {
   val io = IO(new Bundle {
-    val pinout = Analog(1.W)
+    val pinout = Analog(16.W)
     val inp  = Input(Bool())
     val outp = Output(Bool())
     val dir = Input(Bool())
