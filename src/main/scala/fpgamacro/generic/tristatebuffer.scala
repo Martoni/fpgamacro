@@ -5,6 +5,7 @@ import chisel3.util._
 import chisel3.experimental.Analog
 import chisel3.Driver
 
+/* 1 bit tristate buffer */
 class TriStateBuffer extends BlackBox with HasBlackBoxInline {
   val io = IO(new Bundle {
     val pinout = Analog(1.W)
