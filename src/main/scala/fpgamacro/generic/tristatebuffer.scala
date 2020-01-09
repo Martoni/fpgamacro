@@ -28,3 +28,30 @@ class TriStateBuffer extends BlackBox with HasBlackBoxInline {
       |endmodule
     """.stripMargin)
 }
+
+/* 16 bits tristate buffer */
+class TriStateBuffer16 extends BlackBox with HasBlackBoxInline {
+  val io = IO(new Bundle {
+    val pinout = Analog(1.W)
+    val inp  = Input(Bool())
+    val outp = Output(Bool())
+    val dir = Input(Bool())
+  })
+
+    setInline("TriStateBuffer16.v",
+    s"""
+      |module TriStateBuffer16(
+      |    inout   [15:0] pinout,
+      |    input   [15:0] inp,
+      |    output  [15:0] outp,
+      |    input   [15:0] dir
+      |);
+      | genvar i;
+      | for(i=0; i<16; i=i+1){
+      |   assign pinout[i] = dir[i] ? inp[i] : 1'bZ;
+      | }
+      | assign outp = pinout;
+      |
+      |endmodule
+    """.stripMargin)
+}
