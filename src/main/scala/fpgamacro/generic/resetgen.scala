@@ -20,12 +20,12 @@ class ResetGen extends BlackBox with HasBlackBoxInline {
     |reg [7:0] reset_dly_cnt = 0;
     |always@(posedge clk) begin
     |  if(reset_dly_cnt < 8'hff)
-    |      reset_dly_cnt <= reset_dly_cnt + 1;
+    |      reset_dly_cnt <= reset_dly_cnt + 1'b1;
     |  else
-    |      reset_reg <= 0;
+    |      reset_reg <= 1;
     |end
     |
-    |assign rst <= !reset_reg;
+    |assign rst = !reset_reg;
     |endmodule
     """.stripMargin)
 }
