@@ -5,6 +5,7 @@ To install it, clone it then publish local:
 ```bash
 $ git clone https://github.com/Martoni/fpgamacro.git
 $ cd fpgamacro
+$ sbt publishLocal
 ```
 Then add these lines in your `build.sbt` project :
 ```scala
