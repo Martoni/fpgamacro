@@ -3,7 +3,6 @@ package fpgamacro.machxo3
 import chisel3._
 import chisel3.util._
 import chisel3.experimental.Analog
-import chisel3.Driver
 
 class ReverseClock() extends BlackBox with HasBlackBoxInline {
   val io = IO(new Bundle {

@@ -3,7 +3,6 @@ package fpgamacro.generic
 import chisel3._
 import chisel3.util._
 import chisel3.experimental.Analog
-import chisel3.Driver
 
 /* 1 bit tristate buffer */
 class TriStateBuffer extends BlackBox with HasBlackBoxInline {
