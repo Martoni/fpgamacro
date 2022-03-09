@@ -90,3 +90,11 @@ class TLVDS_OBUF extends BlackBox {
   })
 }
 
+class ELVDS_OBUF extends BlackBox {
+  val io = IO(new Bundle {
+    val O = Output(Bool())
+    val OB = Output(Bool())
+    val I = Input(Bool())
+  })
+}
+
