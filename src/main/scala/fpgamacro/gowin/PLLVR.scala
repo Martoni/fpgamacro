@@ -68,7 +68,7 @@ class TMDS_PLLVR(pp: PLLParams = PLLParams(IDIV_SEL = 3, FBDIV_SEL = 54, ODIV_SE
   "DYN_SDIV_SEL" -> pp.DYN_SDIV_SEL,
   "CLKOUTD_SRC" -> "CLKOUT",
   "CLKOUTD3_SRC" -> "CLKOUT",
-  "DEVICE" -> "GW1NSR-4C")
+  )
 
   val clkoutp_o = Wire(Clock())
   var clkoutd3_o = Wire(Clock())
@@ -129,7 +129,7 @@ class GW_PLLVR extends RawModule {
   "DYN_SDIV_SEL" -> 2,
   "CLKOUTD_SRC" -> "CLKOUT",
   "CLKOUTD3_SRC" -> "CLKOUT",
-  "DEVICE" -> "GW1NSR-4C")
+  )
 
   val clkoutp_o = Wire(Clock())
   val clkoutd_o = Wire(Clock())

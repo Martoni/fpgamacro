@@ -18,7 +18,7 @@ class Gowin_OSC(FREQ_DIV: Byte = 10) extends RawModule {
 
   val om: Map[String, Param] = Map(
   "FREQ_DIV" -> FREQ_DIV,
-  "DEVICE" -> "GW1NR-9")
+  )
 
   val osc_inst = Module(new OSC(om))
 

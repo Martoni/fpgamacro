@@ -64,7 +64,7 @@ class Gowin_rPLL(pp: rPLLParams = rPLLParams(IDIV_SEL = 3, FBDIV_SEL = 54, ODIV_
   "DYN_SDIV_SEL" -> pp.DYN_SDIV_SEL,
   "CLKOUTD_SRC" -> "CLKOUT",
   "CLKOUTD3_SRC" -> "CLKOUT",
-  "DEVICE" -> "GW1NR-9")
+  )
 
   val clkoutp_o = Wire(Clock())
   var clkoutd3_o = Wire(Clock())
