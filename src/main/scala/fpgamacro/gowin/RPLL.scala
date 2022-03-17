@@ -39,6 +39,7 @@ class Gowin_rPLL(pp: rPLLParams = rPLLParams(IDIV_SEL = 3, FBDIV_SEL = 54, ODIV_
         val clkin = Input(Clock())
         val clkout = Output(Clock())
         val lock = Output(Bool())
+        val clkoutd = Output(Clock())
     })
 
   val pm: Map[String, Param] = Map(
@@ -66,7 +67,6 @@ class Gowin_rPLL(pp: rPLLParams = rPLLParams(IDIV_SEL = 3, FBDIV_SEL = 54, ODIV_
   "DEVICE" -> "GW1NR-9")
 
   val clkoutp_o = Wire(Clock())
-  val clkoutd_o = Wire(Clock())
   var clkoutd3_o = Wire(Clock())
   val gw_vcc = Wire(UInt(1.W))
   val gw_gnd = Wire(UInt(1.W))
@@ -79,7 +79,7 @@ class Gowin_rPLL(pp: rPLLParams = rPLLParams(IDIV_SEL = 3, FBDIV_SEL = 54, ODIV_
   io.clkout := rpll_inst.io.CLKOUT
   io.lock := rpll_inst.io.LOCK
   clkoutp_o := rpll_inst.io.CLKOUTP
-  clkoutd_o := rpll_inst.io.CLKOUTD
+  io.clkoutd := rpll_inst.io.CLKOUTD
   clkoutd3_o := rpll_inst.io.CLKOUTD3
 
   rpll_inst.io.RESET := gw_gnd
