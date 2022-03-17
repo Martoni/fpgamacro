@@ -4,6 +4,14 @@ import chisel3._
 import chisel3.util._
 import chisel3.experimental.Param
 
+case class rPLLParams(
+  val IDIV_SEL: Byte,
+  val FBDIV_SEL: Byte,
+  val ODIV_SEL: Byte,
+  val DYN_SDIV_SEL: Byte,
+  val DYN_DA_EN: Param
+)
+
 /* rPLL */
 class rPLL(val pm: Map[String, Param]) extends BlackBox(pm){
     val io = IO(new Bundle{
@@ -26,7 +34,7 @@ class rPLL(val pm: Map[String, Param]) extends BlackBox(pm){
 }
 
 /* Gowin rPLL (GW1NR-9) */
-class Gowin_rPLL extends RawModule {
+class Gowin_rPLL(pp: rPLLParams = rPLLParams(IDIV_SEL = 3, FBDIV_SEL = 54, ODIV_SEL = 2, DYN_SDIV_SEL = 2, DYN_DA_EN = "true")) extends RawModule {
     val io = IO(new Bundle {
         val clkin = Input(Clock())
         val clkout = Output(Clock())
@@ -36,13 +44,13 @@ class Gowin_rPLL extends RawModule {
   val pm: Map[String, Param] = Map(
   "FCLKIN" -> "27",
   "DYN_IDIV_SEL" -> "false",
-  "IDIV_SEL" -> 3,
+  "IDIV_SEL" -> pp.IDIV_SEL,
   "DYN_FBDIV_SEL" -> "false",
-  "FBDIV_SEL" -> 54,
+  "FBDIV_SEL" -> pp.FBDIV_SEL,
   "DYN_ODIV_SEL" -> "false",
-  "ODIV_SEL" -> 2,
+  "ODIV_SEL" -> pp.ODIV_SEL,
   "PSDA_SEL" -> "0000",
-  "DYN_DA_EN" -> "true",
+  "DYN_DA_EN" -> pp.DYN_DA_EN,
   "DUTYDA_SEL" -> "1000",
   "CLKOUT_FT_DIR" -> "1'b1",
   "CLKOUTP_FT_DIR" -> "1'b1",
@@ -52,7 +60,7 @@ class Gowin_rPLL extends RawModule {
   "CLKOUT_BYPASS" -> "false",
   "CLKOUTP_BYPASS" -> "false",
   "CLKOUTD_BYPASS" -> "false",
-  "DYN_SDIV_SEL" -> 2,
+  "DYN_SDIV_SEL" -> pp.DYN_SDIV_SEL,
   "CLKOUTD_SRC" -> "CLKOUT",
   "CLKOUTD3_SRC" -> "CLKOUT",
   "DEVICE" -> "GW1NR-9")
