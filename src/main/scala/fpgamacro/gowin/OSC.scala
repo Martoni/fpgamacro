@@ -1,5 +1,4 @@
-package hdl
-package gowin_osc
+package fpgamacro.gowin
 
 import chisel3._
 import chisel3.experimental.Param
