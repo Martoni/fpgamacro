@@ -52,7 +52,7 @@ class Gowin_rPLL(pp: PLLParams = PLLParams(IDIV_SEL = 3, FBDIV_SEL = 54, ODIV_SE
   )
 
   val clkoutp_o = Wire(Clock())
-  var clkoutd3_o = Wire(Clock())
+  val clkoutd3_o = Wire(Clock())
   val gw_gnd = Wire(UInt(1.W))
 
   gw_gnd := 0.U(1.W)
