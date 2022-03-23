@@ -4,13 +4,6 @@ import chisel3._
 import chisel3.util._
 import chisel3.experimental.Param
 
-case class PLLParams(
-  val IDIV_SEL: Byte,
-  val FBDIV_SEL: Byte,
-  val ODIV_SEL: Byte,
-  val DYN_SDIV_SEL: Byte
-)
-
 /* PLLVR */
 class PLLVR(val pm: Map[String, Param]) extends BlackBox(pm){
     val io = IO(new Bundle{
@@ -38,14 +31,7 @@ class PLLVR(val pm: Map[String, Param]) extends BlackBox(pm){
 // PLLParams(IDIV_SEL = 4, FBDIV_SEL = 36, ODIV_SEL = 4, DYN_SDIV_SEL = 16) # CLKOUT_FREQ=200    / 5 = 40.00 MHz
 
 /* TMDS PLLVR */
-class TMDS_PLLVR(pp: PLLParams = PLLParams(IDIV_SEL = 3, FBDIV_SEL = 54, ODIV_SEL = 2, DYN_SDIV_SEL = 30)) extends RawModule {
-    val io = IO(new Bundle {
-        val clkin = Input(Clock())
-        val clkout = Output(Clock())
-        val clkoutd = Output(Clock())
-        val lock = Output(Bool())
-    })
-
+class TMDS_PLLVR(pp: PLLParams = PLLParams(IDIV_SEL = 3, FBDIV_SEL = 54, ODIV_SEL = 2, DYN_SDIV_SEL = 30)) extends  Video_PLL {
   val pm: Map[String, Param] = Map(
   "FCLKIN" -> "27",
   "DYN_IDIV_SEL" -> "false",

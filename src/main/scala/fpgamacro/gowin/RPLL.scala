@@ -26,14 +26,7 @@ class rPLL(val pm: Map[String, Param]) extends BlackBox(pm){
 }
 
 /* Gowin rPLL (GW1NR-9) */
-class Gowin_rPLL(pp: PLLParams = PLLParams(IDIV_SEL = 3, FBDIV_SEL = 54, ODIV_SEL = 2, DYN_SDIV_SEL = 2)) extends RawModule {
-    val io = IO(new Bundle {
-        val clkin = Input(Clock())
-        val clkout = Output(Clock())
-        val clkoutd = Output(Clock())
-        val lock = Output(Bool())
-    })
-
+class Gowin_rPLL(pp: PLLParams = PLLParams(IDIV_SEL = 3, FBDIV_SEL = 54, ODIV_SEL = 2, DYN_SDIV_SEL = 2)) extends Video_PLL {
   val pm: Map[String, Param] = Map(
   "FCLKIN" -> "27",
   "DYN_IDIV_SEL" -> "false",
