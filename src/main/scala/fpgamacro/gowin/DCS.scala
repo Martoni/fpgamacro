@@ -17,7 +17,7 @@ class DCS(val pm: Map[String, Param]) extends BlackBox(pm){
     })
 }
 
-/* GATED_CLK (GW1N-1) */
+/* GATED_CLK (GW1N-1, GW1NZ-1, GW1NSR-4C and GW1NR-9) */
 class GATED_CLK() extends RawModule {
   val clkin = IO(Input(Clock()))
   val clkout = IO(Output(Clock()))
