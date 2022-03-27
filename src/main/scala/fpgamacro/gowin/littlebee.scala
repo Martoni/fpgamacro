@@ -13,6 +13,15 @@ class CLKDIV extends BlackBox(Map("DIV_MODE" -> "5")) {
     })
 }
 
+/* clk div 2 */
+class CLKDIV2 extends BlackBox() {
+    val io = IO(new Bundle{
+        val RESETN = Input(Bool())
+        val HCLKIN = Input(Clock())
+        val CLKOUT = Output(Clock())
+    })
+}
+
 /* OSER10 : serializer 10:1*/
 class OSER10 extends BlackBox(
   Map("GSREN"->"false", "LSREN" -> "true")
