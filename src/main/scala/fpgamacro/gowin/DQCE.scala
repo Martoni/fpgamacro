@@ -16,9 +16,9 @@ class DQCE(val pm: Map[String, Param]) extends BlackBox(pm){
 /* Gowin_DQCE (GW1N-1, GW1NZ-1, GW1NSR-4C and GW1NR-9) */
 class Gowin_DQCE() extends RawModule {
     val io = IO(new Bundle{
-        val clkin = IO(Input(Clock()))
-        val clkout = IO(Output(Clock()))
-        val ce = IO(Input(Bool()))
+        val clkin = Input(Clock())
+        val clkout = Output(Clock())
+        val ce = Input(Bool())
     })
 
   val pm: Map[String, Param] = Map(
