@@ -13,6 +13,15 @@ class CLKDIV extends BlackBox(Map("DIV_MODE" -> "5")) {
     })
 }
 
+/* clk div 2 */
+class CLKDIV2 extends BlackBox() {
+    val io = IO(new Bundle{
+        val RESETN = Input(Bool())
+        val HCLKIN = Input(Clock())
+        val CLKOUT = Output(Clock())
+    })
+}
+
 /* OSER10 : serializer 10:1*/
 class OSER10 extends BlackBox(
   Map("GSREN"->"false", "LSREN" -> "true")
@@ -62,7 +71,7 @@ class Oser10Module extends Module {
 
 
 /* lvds output */
-class TLVDS_OBUF extends BlackBox {
+class LVDS_OBUF extends BlackBox {
   val io = IO(new Bundle {
     val O = Output(Bool())
     val OB = Output(Bool())
@@ -70,11 +79,8 @@ class TLVDS_OBUF extends BlackBox {
   })
 }
 
-class ELVDS_OBUF extends BlackBox {
-  val io = IO(new Bundle {
-    val O = Output(Bool())
-    val OB = Output(Bool())
-    val I = Input(Bool())
-  })
+class TLVDS_OBUF extends LVDS_OBUF {
 }
 
+class ELVDS_OBUF extends LVDS_OBUF {
+}
