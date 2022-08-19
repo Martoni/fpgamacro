@@ -120,6 +120,21 @@ class Ides10Module extends Module {
 }
 
 /* lvds output */
+class LVDS_IBUF extends BlackBox {
+  val io = IO(new Bundle {
+    val I = Input(Bool())
+    val IB = Input(Bool())
+    val O = Output(Bool())
+  })
+}
+
+class TLVDS_IBUF extends LVDS_IBUF {
+}
+
+class ELVDS_IBUF extends LVDS_IBUF {
+}
+
+/* lvds output */
 class LVDS_OBUF extends BlackBox {
   val io = IO(new Bundle {
     val O = Output(Bool())
