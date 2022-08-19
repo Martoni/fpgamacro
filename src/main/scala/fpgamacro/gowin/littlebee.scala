@@ -69,6 +69,55 @@ class Oser10Module extends Module {
   osr10.io.RESET:= reset
 }
 
+/* OSER10 : serializer 10:1*/
+class IDES10 extends BlackBox(
+  Map("GSREN"->"false", "LSREN" -> "true")
+){
+  val io = IO(new Bundle {
+  val D = Input(Bool()) // IDES10 data input signal
+  val Q0 = Output(Bool())
+  val Q1 = Output(Bool())
+  val Q2 = Output(Bool())
+  val Q3 = Output(Bool())
+  val Q4 = Output(Bool())
+  val Q5 = Output(Bool())
+  val Q6 = Output(Bool())
+  val Q7 = Output(Bool())
+  val Q8 = Output(Bool())
+  val Q9 = Output(Bool()) //  IDES10 data output signal
+  val PCLK = Input(Clock()) // Primary clock input signal
+  val FCLK = Input(Clock()) // High speed clock input signal
+  val CALIB = Input(Bool()) // IDES10 Calib signal
+  val RESET = Input(Reset()) // Asynchronous reset input signal,
+                            //active-high.
+  })
+}
+
+class Ides10Module extends Module {
+  val io = IO(new Bundle {
+    val data = Input(Bool())
+    val q = Output(UInt(10.W))
+    val fclk = Input(Clock()) // Fast clock
+    val calib = Input(Bool())
+  })
+
+  val ides10 = Module(new IDES10())
+  ides10.io.D := io.data
+  io.q(0) := ides10.io.Q0
+  io.q(1) := ides10.io.Q1
+  io.q(2) := ides10.io.Q2
+  io.q(3) := ides10.io.Q3
+  io.q(4) := ides10.io.Q4
+  io.q(5) := ides10.io.Q5
+  io.q(6) := ides10.io.Q6
+  io.q(7) := ides10.io.Q7
+  io.q(8) := ides10.io.Q8
+  io.q(9) := ides10.io.Q9
+  ides10.io.PCLK := clock
+  ides10.io.FCLK := io.fclk
+  ides10.io.CALIB:= io.calib
+  ides10.io.RESET:= reset
+}
 
 /* lvds output */
 class LVDS_OBUF extends BlackBox {
