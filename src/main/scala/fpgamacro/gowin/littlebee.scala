@@ -2,6 +2,7 @@ package fpgamacro.gowin
 
 import chisel3._
 import chisel3.util._
+import chisel3.experimental.Analog
 
 /* clk div */
 class CLKDIV extends BlackBox(Map("DIV_MODE" -> "5")) {
@@ -147,4 +148,95 @@ class TLVDS_OBUF extends LVDS_OBUF {
 }
 
 class ELVDS_OBUF extends LVDS_OBUF {
+}
+
+/*MIPI IO*/
+class MIPI_IBUF extends BlackBox {
+  val io = IO(new Bundle {
+    // In LP mode, I is the input when OEN is low.
+    val I = Input(Bool())
+    // In LP mode, IB is the input when OENB is low.
+    val IB = Input(Bool())
+    // In HS mode, controls termination resistance.
+    val HSREN = Input(Bool())
+    // In LP mode, inputs/outputs tristate control signal.
+    val OEN = Input(Bool())
+    // In LP mode, inputs/outputs tristate control signal.
+    val OENB = Input(Bool())
+    // In HS mode, data output signal.
+    val OH = Output(Bool())
+    // In LP mode, OL is the output when OEN is high.
+    val OL = Output(Bool())
+    // In LP mode, OB is the output when OENB is high.
+    val OB = Output(Bool())
+    // In LP mode, IO is output when OEN is low and input when OEN is high.
+    // In HS mode, IO is input.
+    val IO = Input(Bool())
+    // In LP mode, IOB is output when OENB is low and IOB is input when OENB is high.
+    // In HS mode, IOB is input.
+    val IOB = Input(Bool())
+  })
+}
+
+class MIPI_OBUF extends BlackBox {
+  val io = IO(new Bundle {
+    // A-ended data input signal for HS mode or LP mode
+    val I = Input(Bool())
+    // B-ended data input signal in LP mode
+    val IB = Input(Bool())
+    // Mode selection signal, HS or LP mode.(High: HS, Low: LP)
+    val MODESEL = Input(Bool())
+
+    // A-ended data output signal, A differential output in HS mode, A single-ended output in LP mode.
+    val O = Output(Bool())
+    // B-ended data output signal, B differential output in HS mode, B single-ended output in LP mode.
+    val OB = Output(Bool())
+  })
+}
+
+class MIPI_OBUF_A extends BlackBox {
+  val io = IO(new Bundle {
+    // A-ended data input signal for HS mode or LP mode
+    val I = Input(Bool())
+    // B-ended data input signal in LP mode
+    val IB = Input(Bool())
+    // A-ended data input signal in LP mode
+    val IL = Input(Bool())
+    // Mode selection signal, HS or LP mode.(High: HS, Low: LP)
+    val MODESEL = Input(Bool())
+
+    // A-ended data output signal, A differential output in HS mode, A single-ended output in LP mode.
+    val O = Output(Bool())
+    // B-ended data output signal, B differential output in HS mode, B single-ended output in LP mode.
+    val OB = Output(Bool())
+  })
+}
+
+//I3C_IOBUF is used as a bi-directional buffer when MODESEL is high and used as a normal buffer when MODESEL is low.
+class I3C_IOBUF extends BlackBox with HasBlackBoxInline {
+  val io = IO(new Bundle {
+    // Data input signal
+    val I = Input(Bool())
+    // Input and output signal, bidirectional.
+    val IO = Analog(1.W)
+    // Mode selection signal, Normal mode or I3C mode
+    val MODESEL = Input(Bool())
+
+    // Data output signal
+    val O = Output(Bool())
+  })
+
+    setInline("I3C_IOBUF.v",
+    s"""
+      |module I3C_IOBUF(
+      |    inout   IO,
+      |    input   I,
+      |    output  O,
+      |    input   MODESEL
+      |);
+      | assign io = MODESEL ? 1'bZ : I;
+      | assign O = IO;
+      |
+      |endmodule
+    """.stripMargin)
 }
