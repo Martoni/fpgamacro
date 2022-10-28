@@ -1,8 +1,11 @@
 // See README.md for license details.
 
 scalaVersion     := "2.12.12"
-version          := "0.1.0"
+version          := "0.1.0-SNAPSHOT"
 organization     := "org.armadeus"
+
+githubOwner := "Martoni"
+githubRepository := "fpgamacro"
 
 lazy val root = (project in file("."))
   .settings(
