@@ -11,7 +11,10 @@ case class PLLParams(
   val DYN_SDIV_SEL: Byte,
 )
 
-class Video_PLL(pp: PLLParams = PLLParams(IDIV_SEL = 3, FBDIV_SEL = 54, ODIV_SEL = 2, DYN_SDIV_SEL = 30)) extends RawModule {
+class Video_PLL(pp: PLLParams = PLLParams(IDIV_SEL = 3,
+                                          FBDIV_SEL = 54,
+                                          ODIV_SEL = 2,
+                                          DYN_SDIV_SEL = 30)) extends RawModule {
     val io = IO(new Bundle{
         val clkout = Output(Clock())
         val lock = Output(Bool())
@@ -44,7 +47,10 @@ class PLL(val pm: Map[String, Param]) extends BlackBox(pm){
 }
 
 /* Gowin PLL (GW1N-1) */
-class Gowin_PLL(pp: PLLParams = PLLParams(IDIV_SEL = 2, FBDIV_SEL = 24, ODIV_SEL = 4, DYN_SDIV_SEL = 6)) extends Video_PLL {
+class Gowin_PLL(pp: PLLParams = PLLParams(IDIV_SEL = 2,
+                                          FBDIV_SEL = 24,
+                                          ODIV_SEL = 4,
+                                          DYN_SDIV_SEL = 6)) extends Video_PLL {
   val pm: Map[String, Param] = Map(
   "FCLKIN" -> "24",
   "DYN_IDIV_SEL" -> "false",
