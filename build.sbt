@@ -1,11 +1,29 @@
 // See README.md for license details.
 
-scalaVersion     := "2.13.8"
-version          := "0.2.1-SNAPSHOT"
-organization     := "Martoni"
+ThisBuild / scalaVersion     := "2.13.8"
+ThisBuild / version          := "0.2.1-SNAPSHOT"
 
-githubOwner := "Martoni"
-githubRepository := "fpgamacro"
+lazy val publishSettings = Seq (
+    // groupId, SCM, license information
+    organization     := "io.github.Martoni",
+    homepage := Some(url("https://github.com/Martoni/fpgamacro")),
+    scmInfo := Some(ScmInfo(url("https://github.com/Martoni/fpgamacro"),
+                            "git@github.com/Martoni/fpgamacro")),
+    developers := List(Developer("Martoni", "Martoni",
+                                 "mail@fabienm.eu",
+                                 url("https://github.com/Martoni"))),
+    licenses += ("Unlicense", url("https://unlicense.org/")),
+    publishMavenStyle := true,
+    
+    // disable publish with Scala version
+    crossPaths := false,
+    publishTo := Some(
+        if (isSnapshot.value)
+            Opts.resolver.sonatypeSnapshots
+        else
+            Opts.resolver.sonatypeStaging
+        ),
+)
 
 lazy val root = (project in file("."))
   .settings(
@@ -21,5 +39,5 @@ lazy val root = (project in file("."))
       "-feature",
       "-Xcheckinit"
     ),
-    addCompilerPlugin("edu.berkeley.cs" % "chisel3-plugin" % "3.5.1" cross CrossVersion.full),
-  )
+    addCompilerPlugin("edu.berkeley.cs" % "chisel3-plugin" % "3.5.4" cross CrossVersion.full),
+  ).settings(publishSettings: _*)
