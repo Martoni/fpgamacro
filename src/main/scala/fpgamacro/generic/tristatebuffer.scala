@@ -4,51 +4,57 @@ import chisel3._
 import chisel3.util._
 import chisel3.experimental.Analog
 
-/* 1 bit tristate buffer */
-class TriStateBuffer extends BlackBox with HasBlackBoxInline {
+class TriStateBuffer(width: Int = 1) extends BlackBox with HasBlackBoxInline {
   val io = IO(new Bundle {
-    val pinout = Analog(1.W)
-    val inp  = Input(Bool())
-    val outp = Output(Bool())
-    val dir = Input(Bool())
+    val pinout = Analog(width.W)
+    val inp  = Input(UInt(width.W))
+    val outp = Output(UInt(width.W))
+    val dir = Input(Bool()) // 1 for output, 0 for input
   })
-
-    setInline("TriStateBuffer.v",
-    s"""
-      |module TriStateBuffer(
-      |    inout   pinout,
-      |    input   inp,
-      |    output  outp,
-      |    input   dir
-      |);
-      | assign pinout = dir ? inp : 1'bZ;
-      | assign outp = pinout;
-      |
-      |endmodule
-    """.stripMargin)
-}
-
-/* 16 bits tristate buffer */
-class TriStateBuffer16 extends BlackBox with HasBlackBoxInline {
-  val io = IO(new Bundle {
-    val pinout = Analog(16.W)
-    val inp  = Input(UInt(16.W))
-    val outp = Output(UInt(16.W))
-    val dir  = Input(UInt(16.W))
-  })
-
-    setInline("TriStateBuffer16.v",
-    s"""
-    |module TriStateBuffer16(
-    |    inout   [15:0] pinout,
-    |    input   [15:0] inp,
-    |    output  [15:0] outp,
-    |    input   [15:0] dir
+    val msb = width - 1
+    setInline(f"TriStateBuffer$width%d.v",
+    f"""
+    |module TriStateBuffer$width%d(
+    |    inout   [$msb%d:0] pinout,
+    |    input   [$msb%d:0] inp,
+    |    output  [$msb%d:0] outp,
+    |    input   dir
     |);
     |
     |generate
     | genvar i;
-    | for(i=0; i<16; i=i+1)
+    | for(i=0; i<$width%d; i=i+1)
+    | begin: gen1
+    |   assign pinout[i] = dir ? inp[i] : 1'bZ;
+    | end
+    |endgenerate
+    |
+    |assign outp = pinout;
+    |
+    |endmodule
+    """.stripMargin)
+}
+
+class TriStateBufferAtomic(width: Int) extends BlackBox with HasBlackBoxInline {
+  val io = IO(new Bundle {
+    val pinout = Analog(width.W)
+    val inp  = Input(UInt(width.W))
+    val outp = Output(UInt(width.W))
+    val dir  = Input(UInt(width.W)) // 1 for output, 0 for input
+  })
+    val msb = width - 1
+    setInline(f"TriStateBufferAtomic$width%d.v",
+    f"""
+    |module TriStateBufferAtomic$width%d(
+    |    inout   [$msb%d:0] pinout,
+    |    input   [$msb%d:0] inp,
+    |    output  [$msb%d:0] outp,
+    |    input   [$msb%d:0] dir
+    |);
+    |
+    |generate
+    | genvar i;
+    | for(i=0; i<$width%d; i=i+1)
     | begin: gen1
     |   assign pinout[i] = dir[i] ? inp[i] : 1'bZ;
     | end
@@ -59,3 +65,6 @@ class TriStateBuffer16 extends BlackBox with HasBlackBoxInline {
     |endmodule
     """.stripMargin)
 }
+
+// XXX Legacy (deprecated)
+class TriStateBuffer16 extends TriStateBufferAtomic(16)
