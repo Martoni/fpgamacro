@@ -39,7 +39,7 @@ Generating a reset pulse with initial 0 state.
 
 ### TriStateBuffer
 
-Instanciation of 1 bit and 16bits tri-state buffers.
+Instantiation of n-bits tri-state buffers. Each lines could have common (`TriStateBuffer`) or different (`TristateBufferAtomic`) directions.
 
 ## MachXO3
 
