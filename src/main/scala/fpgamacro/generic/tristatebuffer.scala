@@ -59,7 +59,7 @@ class TriStateBufferAtomic(width: Int) extends BlackBox with HasBlackBoxInline {
     |   assign pinout[i] = dir[i] ? inp[i] : 1'bZ;
     | end
     |endgenerate
-    | 
+    |
     |assign outp = pinout;
     |
     |endmodule
