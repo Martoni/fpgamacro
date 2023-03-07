@@ -14,7 +14,7 @@ class TriStateBuffer(width: Int = 1) extends BlackBox with HasBlackBoxInline {
     val msb = width - 1
     setInline(f"TriStateBuffer$width%d.v",
     f"""
-    |module TriStateBuffer$width%d(
+    |module TriStateBuffer(
     |    inout   [$msb%d:0] pinout,
     |    input   [$msb%d:0] inp,
     |    output  [$msb%d:0] outp,
