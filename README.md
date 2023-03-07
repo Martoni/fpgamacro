@@ -1,23 +1,7 @@
 # FpgaMacro
 A Chisel3 package to describe verilog FPGA template and macro for hardened FPGA modules
 
-## Use it globally (with maven.pkg.github.com)
-
-To use it without clone the repository, add the following lines to your
-build.sbt project :
-
-```scala
-...
-externalResolvers += "fpgamacro packages" at "https://maven.pkg.github.com/Martoni/fpgamacro",
-...
-libraryDependencies ++= Seq(
-...
-  "Martoni" %% "fpgamacro" % "0.1.0"
-  ...
-),
-```
-
-## Use it locally
+## Use it locally (publish local)
 
 To install it, clone it then publish local:
 ```bash
@@ -28,7 +12,7 @@ $ sbt publishLocal
 Then add these lines in your `build.sbt` project :
 ```scala
 //publish local https://github.com/Martoni/fpgamacro.git
-libraryDependencies ++= Seq("org.armadeus" %% "fpgamacro" % "0.1.0")
+libraryDependencies ++= Seq("org.armadeus" %% "fpgamacro" % "0.2.2")
 ```
 
 ## Generic
