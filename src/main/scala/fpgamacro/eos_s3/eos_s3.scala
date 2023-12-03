@@ -1,7 +1,103 @@
-package fpgamacro.eos-s3
+package fpgamacro.eos_s3
 
 import chisel3._
 import chisel3.util._
+import chisel3.experimental.Analog
+
+/* qlal4s3b_cell_macro */
+class qlal4s3b_cell_macro() extends BlackBox() {
+  val io = IO(new Bundle{
+    val WBs_ADR      = Output(UInt(17.W)) // output [16:0] | Address Bus       to FPGA
+    val WBs_CYC      = Output(Bool())     // output        | Cycle Chip Select to FPGA
+    val WBs_BYTE_STB = Output(UInt(4.W))  // output  [3:0] | Byte Select       to FPGA
+    val WBs_WE       = Output(Bool())     // output        | Write Enable      to FPGA
+    val WBs_RD       = Output(Bool())     // output        | Read  Enable      to FPGA
+    val WBs_STB      = Output(Bool())     // output        | Strobe Signal     to FPGA
+    val WBs_WR_DAT   = Output(UInt(32.W)) // output [31:0] | Write Data Bus    to FPGA
+    val WB_CLK       = Input(Clock())     // input         | FPGA Clock                 from FPGA
+    val WB_RST       = Output(Bool())     // output        | FPGA Reset                 to   FPGA
+    val WBs_RD_DAT   = Input(UInt(32.W))  // input  [31:0] | Read Data Bus              from FPGA
+    val WBs_ACK      = Input(Bool())      // input         | Transfer Cycle Acknowledge from FPGA
+    // SDMA Signals
+    val SDMA_Req     = Input(UInt(4.W))  // input   [3:0]
+    val SDMA_Sreq    = Input(UInt(4.W))  // input   [3:0]
+    val SDMA_Done    = Output(UInt(4.W)) // output  [3:0]
+    val SDMA_Active  = Output(UInt(4.W)) // output  [3:0]
+    // FB Interrupts
+    val FB_msg_out   = Input(UInt(4.W)) // input   [3:0]
+    val FB_Int_Clr   = Input(UInt(8.W)) // input   [7:0]
+    val FB_Start     = Output(Bool())   // output
+    val FB_Busy      = Input(Bool())    // input
+    // FB Clocks
+    val Sys_Clk0     = Output(Clock()) // output
+    val Sys_Clk0_Rst = Output(Bool()) // output
+    val Sys_Clk1     = Output(Clock()) // output
+    val Sys_Clk1_Rst = Output(Bool()) // output
+    // Packet FIFO
+    val Sys_PKfb_Clk    = Input(Clock())  // input
+    val Sys_PKfb_Rst    = Output(Bool()) // output
+    val FB_PKfbData     = Input(UInt(32.W)) // input  [31:0]
+    val FB_PKfbPush     = Input(UInt(4.W))  // input   [3:0]
+    val FB_PKfbSOF      = Input(Bool())  // input
+    val FB_PKfbEOF      = Input(Bool())  // input
+    val FB_PKfbOverflow = Output(Bool()) // output
+    // Sensor Interface
+    val Sensor_Int = Output(UInt(8.W))  // output  [7:0]
+    val TimeStamp  = Output(UInt(24.W)) // output [23:0]
+    // SPI Master APB Bus
+    val Sys_Pclk      = Output(Clock()) // output
+    val Sys_Pclk_Rst  = Output(Bool()) // output      <-- Fixed to add "_Rst"
+    val Sys_PSel      = Input(Bool()) // input
+    val SPIm_Paddr    = Input(UInt(16.W)) // input  [15:0]
+    val SPIm_PEnable  = Input(Bool()) // input
+    val SPIm_PWrite   = Input(Bool()) // input
+    val SPIm_PWdata   = Input(UInt(32.W))  // input  [31:0]
+    val SPIm_Prdata   = Output(UInt(32.W)) // output [31:0]
+    val SPIm_PReady   = Output(Bool()) // output
+    val SPIm_PSlvErr  = Output(Bool()) // output
+    // Misc
+    val Device_ID  = Input(UInt(16.W)) // input  [15:0]
+    // FBIO Signals
+    val FBIO_In      = Output(UInt(14.W)) // output [13:0] <-- Do Not make any connections; Use Constraint manager in SpDE to sFBIO
+    val FBIO_In_En   = Input(UInt(14.W)) // input  [13:0] <-- Do Not make any connections; Use Constraint manager in SpDE to sFBIO
+    val FBIO_Out     = Input(UInt(14.W)) // input  [13:0] <-- Do Not make any connections; Use Constraint manager in SpDE to sFBIO
+    val FBIO_Out_En  = Input(UInt(14.W)) // input  [13:0] <-- Do Not make any connections; Use Constraint manager in SpDE to sFBIO
+    // ???
+    val SFBIO            = Analog(14.W)  // inout  [13:0]
+    val Device_ID_6S     = Input(Bool()) // input
+    val Device_ID_4S     = Input(Bool()) // input
+    val SPIm_PWdata_26S  = Input(Bool()) // input
+    val SPIm_PWdata_24S  = Input(Bool()) // input
+    val SPIm_PWdata_14S  = Input(Bool()) // input
+    val SPIm_PWdata_11S  = Input(Bool()) // input
+    val SPIm_PWdata_0S   = Input(Bool()) // input
+    val SPIm_Paddr_8S    = Input(Bool()) // input
+    val SPIm_Paddr_6S    = Input(Bool()) // input
+    val FB_PKfbPush_1S   = Input(Bool()) // input
+    val FB_PKfbData_31S  = Input(Bool()) // input
+    val FB_PKfbData_21S  = Input(Bool()) // input
+    val FB_PKfbData_19S  = Input(Bool()) // input
+    val FB_PKfbData_9S   = Input(Bool()) // input
+    val FB_PKfbData_6S   = Input(Bool()) // input
+    val Sys_PKfb_ClkS    = Input(Bool()) // input
+    val FB_BusyS         = Input(Bool()) // input
+    val WB_CLKS          = Input(Clock()) // input
+  })
+}
+
+class SysClkAndRst extends RawModule {
+  val io = IO(new Bundle {
+    val sys_clk_0 = Output(Clock())
+    val sys_clk_0_rst = Output(Bool())
+  })
+  val u_qlal4s3b_cell_macro = Module(new qlal4s3b_cell_macro())
+  io.sys_clk_0 := u_qlal4s3b_cell_macro.io.Sys_Clk0
+  io.sys_clk_0_rst := u_qlal4s3b_cell_macro.io.Sys_Clk0_Rst
+}
+
+object SysClkAndRst extends App {
+  (new chisel3.stage.ChiselStage).emitVerilog(new SysClkAndRst(), args)
+}
 
 // TODO: integrate this macro in chisel
 //
