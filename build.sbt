@@ -5,7 +5,7 @@ version          := "0.2.2"
 organization     := "Martoni"
 
 val majorChiselVersion = "3"
-val minorChiselVersion = "5.4"
+val minorChiselVersion = "5.6"
 
 val chiselVersion = majorChiselVersion + "." + minorChiselVersion
 
