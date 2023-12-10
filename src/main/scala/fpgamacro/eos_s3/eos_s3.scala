@@ -85,6 +85,13 @@ class qlal4s3b_cell_macro() extends BlackBox() {
   })
 }
 
+class SysClk extends RawModule {
+  val io = IO(new Bundle {
+    val sys_clk_0 = Output(Clock())
+  })
+  io.sys_clk_0 := u_qlal4s3b_cell_macro.io.Sys_Clk0
+}
+
 class SysClkAndRst extends RawModule {
   val io = IO(new Bundle {
     val sys_clk_0 = Output(Clock())
