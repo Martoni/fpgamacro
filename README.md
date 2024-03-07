@@ -1,5 +1,5 @@
 # FpgaMacro
-A Chisel3 package to describe verilog FPGA template and macro for hardened FPGA modules
+A [Chisel](https://www.chisel-lang.org/) package to describe verilog FPGA template and macro for hardened FPGA modules
 
 # Install
 
@@ -14,7 +14,7 @@ $ sbt publishLocal
 Then add these lines in your `build.sbt` project :
 ```scala
 //publish local https://github.com/Martoni/fpgamacro.git
-libraryDependencies ++= Seq("org.armadeus" %% "fpgamacro" % "0.2.2")
+libraryDependencies ++= Seq("org.armadeus" %% "fpgamacro" % "6.2.0")
 ```
 
 # Library
