@@ -14,7 +14,7 @@ $ sbt publishLocal
 Then add these lines in your `build.sbt` project :
 ```scala
 //publish local https://github.com/Martoni/fpgamacro.git
-libraryDependencies ++= Seq("org.armadeus" %% "fpgamacro" % "6.2.0")
+libraryDependencies ++= Seq("org.armadeus" %% "fpgamacro" % "6.2.1")
 ```
 
 # Library
