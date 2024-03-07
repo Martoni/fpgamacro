@@ -1,6 +1,7 @@
 package fpgamacro.ice40
 
 import chisel3._
+import circt.stage.ChiselStage
 import chisel3.util._
 import chisel3.experimental.Param
 
@@ -83,8 +84,23 @@ class TopSB_PLL40_CORE extends RawModule {
   io.clock_o := gm_pll.io.PLLOUTCORE
   gm_pll.io.RESETB := true.B
   gm_pll.io.BYPASS := false.B
+
+  gm_pll.io.EXTFEEDBACK := DontCare
+
+  gm_pll.io.DYNAMICDELAY := DontCare
+  gm_pll.io.LATCHINPUTVALUE := DontCare
+  gm_pll.io.SDI := DontCare
+  gm_pll.io.SCLK := DontCare
 }
 
 object TopSB_PLL40_CORE extends App {
-  (new chisel3.stage.ChiselStage).emitVerilog(new TopSB_PLL40_CORE(), args)
+  val verilog_src = ChiselStage.emitSystemVerilog(
+      new TopSB_PLL40_CORE(),
+      firtoolOpts = Array("-disable-all-randomization",
+                          "-strip-debug-info"))
+  val fverilog = os.pwd / "TopSB_PLL40_CORE.v"
+  if(os.exists(fverilog))
+    os.remove(fverilog)
+  os.write(fverilog, verilog_src)
 }
+
