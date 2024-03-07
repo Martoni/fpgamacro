@@ -1,6 +1,7 @@
 package fpgamacro.eos_s3
 
 import chisel3._
+import circt.stage.ChiselStage
 import chisel3.util._
 import chisel3.experimental.Analog
 
@@ -91,6 +92,48 @@ class SysClk extends RawModule {
   })
   val u_qlal4s3b_cell_macro = Module(new qlal4s3b_cell_macro())
   io.sys_clk_0 := u_qlal4s3b_cell_macro.io.Sys_Clk0
+
+  /* DontCare */
+  u_qlal4s3b_cell_macro.io.WB_CLK := DontCare 
+  u_qlal4s3b_cell_macro.io.WBs_RD_DAT := DontCare 
+  u_qlal4s3b_cell_macro.io.WBs_ACK := DontCare 
+  u_qlal4s3b_cell_macro.io.SDMA_Req := DontCare 
+  u_qlal4s3b_cell_macro.io.SDMA_Sreq := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_msg_out := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_Int_Clr := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_Busy := DontCare 
+  u_qlal4s3b_cell_macro.io.Sys_PKfb_Clk := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbData := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbPush := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbSOF := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbEOF := DontCare 
+  u_qlal4s3b_cell_macro.io.Sys_PSel := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_Paddr := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_PEnable := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_PWrite := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_PWdata := DontCare 
+  u_qlal4s3b_cell_macro.io.Device_ID := DontCare 
+  u_qlal4s3b_cell_macro.io.FBIO_In_En := DontCare 
+  u_qlal4s3b_cell_macro.io.FBIO_Out := DontCare 
+  u_qlal4s3b_cell_macro.io.FBIO_Out_En := DontCare 
+  u_qlal4s3b_cell_macro.io.Device_ID_6S := DontCare 
+  u_qlal4s3b_cell_macro.io.Device_ID_4S := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_PWdata_26S := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_PWdata_24S := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_PWdata_14S := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_PWdata_11S := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_PWdata_0S := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_Paddr_8S := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_Paddr_6S := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbPush_1S := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbData_31S := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbData_21S := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbData_19S := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbData_9S := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbData_6S := DontCare 
+  u_qlal4s3b_cell_macro.io.Sys_PKfb_ClkS := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_BusyS := DontCare 
+  u_qlal4s3b_cell_macro.io.WB_CLKS := DontCare 
 }
 
 class SysClkAndRst extends RawModule {
@@ -101,10 +144,59 @@ class SysClkAndRst extends RawModule {
   val u_qlal4s3b_cell_macro = Module(new qlal4s3b_cell_macro())
   io.sys_clk_0 := u_qlal4s3b_cell_macro.io.Sys_Clk0
   io.sys_clk_0_rst := u_qlal4s3b_cell_macro.io.Sys_Clk0_Rst
+
+  /* DontCare */
+  u_qlal4s3b_cell_macro.io.WB_CLK := DontCare 
+  u_qlal4s3b_cell_macro.io.WBs_RD_DAT := DontCare 
+  u_qlal4s3b_cell_macro.io.WBs_ACK := DontCare 
+  u_qlal4s3b_cell_macro.io.SDMA_Req := DontCare 
+  u_qlal4s3b_cell_macro.io.SDMA_Sreq := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_msg_out := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_Int_Clr := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_Busy := DontCare 
+  u_qlal4s3b_cell_macro.io.Sys_PKfb_Clk := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbData := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbPush := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbSOF := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbEOF := DontCare 
+  u_qlal4s3b_cell_macro.io.Sys_PSel := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_Paddr := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_PEnable := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_PWrite := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_PWdata := DontCare 
+  u_qlal4s3b_cell_macro.io.Device_ID := DontCare 
+  u_qlal4s3b_cell_macro.io.FBIO_In_En := DontCare 
+  u_qlal4s3b_cell_macro.io.FBIO_Out := DontCare 
+  u_qlal4s3b_cell_macro.io.FBIO_Out_En := DontCare 
+  u_qlal4s3b_cell_macro.io.Device_ID_6S := DontCare 
+  u_qlal4s3b_cell_macro.io.Device_ID_4S := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_PWdata_26S := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_PWdata_24S := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_PWdata_14S := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_PWdata_11S := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_PWdata_0S := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_Paddr_8S := DontCare 
+  u_qlal4s3b_cell_macro.io.SPIm_Paddr_6S := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbPush_1S := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbData_31S := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbData_21S := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbData_19S := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbData_9S := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_PKfbData_6S := DontCare 
+  u_qlal4s3b_cell_macro.io.Sys_PKfb_ClkS := DontCare 
+  u_qlal4s3b_cell_macro.io.FB_BusyS := DontCare 
+  u_qlal4s3b_cell_macro.io.WB_CLKS := DontCare 
 }
 
 object SysClkAndRst extends App {
-  (new chisel3.stage.ChiselStage).emitVerilog(new SysClkAndRst(), args)
+  val verilog_src = ChiselStage.emitSystemVerilog(
+      new SysClkAndRst(),
+      firtoolOpts = Array("-disable-all-randomization",
+                          "-strip-debug-info"))
+  val fverilog = os.pwd / "SysClkAndRst.v"
+  if(os.exists(fverilog))
+    os.remove(fverilog)
+  os.write(fverilog, verilog_src)
 }
 
 // TODO: integrate this macro in chisel

@@ -1,11 +1,11 @@
 // See README.md for license details.
 
-scalaVersion     := "2.13.8"
-version          := "0.2.2"
+scalaVersion     := "2.13.12"
+version          := "6.1.0"
 organization     := "Martoni"
 
-val majorChiselVersion = "3"
-val minorChiselVersion = "5.6"
+val majorChiselVersion = "6"
+val minorChiselVersion = "1.0"
 
 val chiselVersion = majorChiselVersion + "." + minorChiselVersion
 
@@ -13,15 +13,15 @@ lazy val root = (project in file("."))
   .settings(
     name := "fpgamacro",
     libraryDependencies ++= Seq(
-      "edu.berkeley.cs" %% "chisel3" % chiselVersion,
-      "edu.berkeley.cs" %% "chiseltest" % ("0." + minorChiselVersion) % "test"
+      "org.chipsalliance" %% "chisel" % chiselVersion,
+      "org.scalatest" %% "scalatest" % "3.2.16" % "test",
     ),
     scalacOptions ++= Seq(
-      "-Xsource:2.11",
       "-language:reflectiveCalls",
       "-deprecation",
       "-feature",
-      "-Xcheckinit"
+      "-Xcheckinit",
+      "-Ymacro-annotations",
     ),
-    addCompilerPlugin("edu.berkeley.cs" % "chisel3-plugin" % chiselVersion cross CrossVersion.full),
+    addCompilerPlugin("org.chipsalliance" % "chisel-plugin" % chiselVersion cross CrossVersion.full),
   )

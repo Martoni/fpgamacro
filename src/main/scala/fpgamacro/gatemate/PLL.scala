@@ -1,6 +1,7 @@
 package fpgamacro.gatemate
 
 import chisel3._
+import circt.stage.ChiselStage
 import chisel3.util.Cat
 import chisel3.experimental.Param
 
@@ -71,5 +72,12 @@ class TopCC_PLL extends RawModule {
 }
 
 object TopCC_PLL extends App {
-  (new chisel3.stage.ChiselStage).emitVerilog(new TopCC_PLL(), args)
+  val verilog_src = ChiselStage.emitSystemVerilog(
+      new TopCC_PLL(),
+      firtoolOpts = Array("-disable-all-randomization",
+                          "-strip-debug-info"))
+  val fverilog = os.pwd / "TopCC_PLL.v"
+  if(os.exists(fverilog))
+    os.remove(fverilog)
+  os.write(fverilog, verilog_src)
 }
