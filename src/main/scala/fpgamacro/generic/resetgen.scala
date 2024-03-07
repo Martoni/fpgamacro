@@ -51,5 +51,5 @@ class ResetGen(delayClk: Int = 0xFF) extends RawModule {
   val resetGen = Module(new ResetGenEna(delayClk))
   resetGen.io.clk <> io.clk
   resetGen.io.ena := true.B
-  resetGen.io.rst := io.rst
+  io.rst := resetGen.io.rst
 }
