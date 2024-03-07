@@ -1,13 +1,12 @@
 // See README.md for license details.
-
-scalaVersion     := "2.13.12"
-version          := "6.1.0"
-organization     := "Martoni"
-
 val majorChiselVersion = "6"
 val minorChiselVersion = "2.0"
 
 val chiselVersion = majorChiselVersion + "." + minorChiselVersion
+
+scalaVersion     := "2.13.12"
+version          := chiselVersion
+organization     := "Martoni"
 
 lazy val root = (project in file("."))
   .settings(
