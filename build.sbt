@@ -5,8 +5,15 @@ val minorChiselVersion = "2.0"
 val chiselVersion = majorChiselVersion + "." + minorChiselVersion
 
 scalaVersion     := "2.13.12"
-version          := majorChiselVersion + ".2.1"
+version          := majorChiselVersion + ".2.2"
 organization     := "Martoni"
+
+credentials += Credentials(
+  "GitHub Package Registry",
+  "maven.pkg.github.com",
+  "_",
+  System.getenv("GITHUB_TOKEN")
+)
 
 lazy val root = (project in file("."))
   .settings(
@@ -24,3 +31,6 @@ lazy val root = (project in file("."))
     ),
     addCompilerPlugin("org.chipsalliance" % "chisel-plugin" % chiselVersion cross CrossVersion.full),
   )
+
+publishTo := Some("GitHub Martoni Apache Maven Packages" at "https://maven.pkg.github.com/Martoni/fpgamacro")
+publishMavenStyle := true
